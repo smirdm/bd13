@@ -1,23 +1,22 @@
 #!/usr/bin/python
 
-import sys
-
-prev_key = None
-values = []
-
-def print_res(key, values):
-	avg = sum(values)
-#	if avg > 4.5:
-	print("%s\t%.2f" % (key, avg)) 
-
-for line in sys.stdin:
-	key, value = line.strip().split("\t")
-
-	if key != prev_key and prev_key is not None:
-		print_res(prev_key, values)
-		values = []
-	values.append(float(value))
-	prev_key = key
-
-if prev_key is not None:
-	print_res(prev_key, values)
+import sys 
+ 
+def do_reduce(key, values): 
+    return key, sum(values) 
+ 
+prev_key = None 
+values = [] 
+ 
+for line in sys.stdin: 
+    key, value = line.split("\t") 
+    if key != prev_key and prev_key is not None: 
+        result_key, result_value = do_reduce(prev_key, values) 
+        print(result_key + "\t" + str(result_value)) 
+        values = [] 
+    prev_key = key 
+    values.append(int(value)) 
+ 
+if prev_key is not None: 
+    result_key, result_value = do_reduce(prev_key, values) 
+    print(result_key + "\t" + str(result_value)) 
