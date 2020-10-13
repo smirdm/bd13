@@ -9,7 +9,7 @@ prev_key = None
 values = [] 
  
 for line in sys.stdin: 
-    key, value = line.split("\t") 
+    key, value = line.split(",") 
     if key != prev_key and prev_key is not None: 
         result_key, result_value = do_reduce(prev_key, values) 
         print(result_key + "\t" + str(result_value)) 
